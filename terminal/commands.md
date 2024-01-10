@@ -204,12 +204,39 @@ git push origin <branch>
 git checkout <branch>
 ```
 
-add ".gitignore" file list the files that should not be uploaded: for example images, buld files.
+add ".gitignore" file list the files that should not be uploaded: for example images, buld files  or virtualenv.
+This example will ignore build,  dist __pychache__ folders,  files with  png,  and  spec  extenstion, and will  allow png files from  images  folder
+
+```
+build
+dist
+__pycache__
+*.png
+!images/*.png
+*.spec
+```
 
 
 
- 
+Copy files to remote server:
+
+```
+scp file.txt ```username```@minerva://storage01/```username```/
+```
 
 
+ Windows software
+
+VSCODE https://code.visualstudio.com/ <br>
+Bitwise
+https://www.bitvise.com/ssh-client-download <br>
+
+# Homework
 
 
+- Push your python code into a repository
+- Connect to server  remotely. 
+- Download your code.
+- Check for avaliable gpus
+- Run you code on one free GPU
+- Download your  result or modell from server
