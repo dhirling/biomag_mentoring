@@ -87,6 +87,15 @@ example run  on local pc:
 ssh -f -n -L 8000:localhost:8001
 ```
 
+
+
+Copy files to remote server:
+
+```
+scp file.txt ```username```@minerva://storage01/```username```/
+```
+
+
 ##  BIOMAG GPU servers:
 
 - minerva
@@ -218,15 +227,10 @@ __pycache__
 
 
 
-Copy files to remote server:
 
-```
-scp file.txt ```username```@minerva://storage01/```username```/
-```
-
-
- Windows software
-
+ # Windows softwares
+ <br>
+git bash https://www.git-scm.com/downloads
 VSCODE https://code.visualstudio.com/ <br>
 Bitwise
 https://www.bitvise.com/ssh-client-download <br>
@@ -234,9 +238,9 @@ https://www.bitvise.com/ssh-client-download <br>
 # Homework
 
 
-- Push your python code into a repository
-- Connect to server  remotely. 
+- Push your python code into a repository that uses GPU, generates output (for example images, tables, texts,...)
+- Connect to a server remotely. 
 - Download your code.
 - Check for avaliable gpus
 - Run you code on one free GPU
-- Download your  result or modell from server
+- Download your results or model from server
