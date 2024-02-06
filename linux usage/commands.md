@@ -91,8 +91,23 @@ connect to remote server on ssh:
 ssh user@server
 password
 
+### ssh tunneling
+
+Ssh tunnel allows to forward port from a remote machine securely.
+
+ssh -f -n -L LOCALPORT:serveradress:PORT user@server
+
+In this case remote host 8001 port will be forwared to local 8000 port
 
 
+example run  on local pc:
+-f and -N commands allow to run it in background
+```
+ssh -f -N -L 8000:localhost:8001 user@server
+
+```
+
+## Scp
 Copy files to remote server:
 
 ```
@@ -192,30 +207,23 @@ https://tmuxcheatsheet.com/
 
 
 ## Jupyter server
-Login to the server using ssh
-create a virtual  enviroment for you project
+Login to the server using ssh<br>
+Create a virtual  enviroment for you project
+
 ```
 pip install jupyter-notebook
 ```
 
-Run jupyter server
+Run jupyter server with the following command, set the port with --port 
 ```
 jupyter-notebook --no-browser --port=8001
 ```
 
+
+
 On local pc, create ssh tunnel that allows port forwarding
 
-ssh -f -n -L LOCALPORT:serveradress:PORT user@server
-
-In this case remote host 8001 port will be forwared to local 8000 port
-
-
-example run  on local pc:
-```
-ssh -f -n -L 8000:localhost:8001
 ssh -f -N -L 8000:localhost:8001 user@server
-
-```
 
 
 
