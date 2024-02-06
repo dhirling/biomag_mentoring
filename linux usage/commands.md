@@ -1,6 +1,7 @@
 # Terminal commands 
 
 ## Useful commands on Linux
+
 Change directory with
 cd absolute or relative path 
 ```
@@ -48,13 +49,28 @@ chmod +x script.sh
 
 Use ls command to check permissions 
 ls -l
-This will list the nvidia video cards, usage and status
+This will list the nvidia video cards, usage and status. 
+Devices Ids underlined with red.
 ```
 nvidia-smi  
 ```
-This will list the CPU, RAM usage and processes  similar to task manager
 
+<img src='images/nvidiasmi.png'><br>
+
+To restrict videocard usage to  number you can specify it  your python code
+or
+
+run your script with "CUDA_VISIBLE_DEVICES=deviceid(s)"
+
+This example will run the script on the  0 and 1 ID GPUs
+```
+CUDA_VISIBLE_DEVICES=0,1 python3 train_deep_learning_important_unique_word_champion_segmentation.py
+```
+
+This will list the CPU, RAM usage and processes  similar to task manager
+```
 htop
+```
 
 you can kill  processes using this command
 
@@ -74,18 +90,6 @@ connect to remote server on ssh:
 
 ssh user@server
 password
-
-create ssh tunnel  for  monitoring
-
-ssh -f -n -L LOCALPORT:serveradress:PORT user@server
-
-this will forward remote host 8001 port to local 8000 port
-
-
-example run  on local pc:
-```
-ssh -f -n -L 8000:localhost:8001
-```
 
 
 
@@ -185,6 +189,36 @@ ctrl b + arrow <br>
 Link to more :
 
 https://tmuxcheatsheet.com/
+
+
+## Jupyter server
+Login to the server using ssh
+create a virtual  enviroment for you project
+```
+pip install jupyter-notebook
+```
+
+Run jupyter server
+```
+jupyter-notebook --no-browser --port=8001
+```
+
+On local pc, create ssh tunnel that allows port forwarding
+
+ssh -f -n -L LOCALPORT:serveradress:PORT user@server
+
+In this case remote host 8001 port will be forwared to local 8000 port
+
+
+example run  on local pc:
+```
+ssh -f -n -L 8000:localhost:8001
+ssh -f -N -L 8000:localhost:8001 user@server
+
+```
+
+
+
 
 
 ## GIT
