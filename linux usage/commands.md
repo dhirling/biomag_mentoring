@@ -1,7 +1,10 @@
 # Terminal commands 
 
 ## Useful commands on Linux
-
+Open system manual pager for installed programs
+```
+man cd
+```
 Change directory with
 cd absolute or relative path 
 ```
