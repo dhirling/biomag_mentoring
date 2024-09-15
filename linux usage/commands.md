@@ -100,6 +100,21 @@ ls -lah
 ```
 ***
 
+### grep
+Using grep we are able to search for files containing an expression or find section of files containing an expression.
+grep uses regular expressions. Regex is an incredibly usefull tool, however it is not in the scope for this document. You can learn more about regex here: https://www.rexegg.com/regex-quickstart.php \
+Eg. this will list all the lines which contain the string `"export"` :
+```
+grep "export" ~/.bashrc
+```
+Most useful switches:
+* `-c` instead of returning the lines themselves, this will return the count of occurences of the expression
+* `-l` instead of returning the lines themselves, this will return the files with matches to the expression
+* `-i` ignore case
+* `-n` returns the line number alongside with the line matched
+
+For other oprions checkout the manual: `man grep`
+
 ### cp, mv, ln, rm
 
 #### cp
@@ -271,9 +286,46 @@ python3 train_deep_learning_important_unique_word_champion_segmentation.py
 python3 train_deep_learning_important_something_else.py
 ```
 
-***
+## Redirection and Pipeing
 
-This will list the CPU, RAM usage and processes  similar to task manager
+In linux we can manipulate how a program uses is's STDIN (input), STDOUT (output), and STDERR (error output) streams.
+
+### Redirection
+
+You can redirect a programs output from STDOUT to a file with the `>` operator.
+eg:
+```
+ls -lah > directory_contents.txt
+```
+You will see that the terminal won't display the results this time since it was redirected to `directory_contents.txt`. Open the new file and check out it's content.
+If we try it again we would overwrite the file we just created. we can append to existing files with the `>>` operator:
+```
+ls -lah >> directory_contents.txt
+```
+We can also redirect the STDERR stream. This is very useful for logging purposes. To do this you can use the `2>` operator:
+```
+not_existing_app 2> errors.txt
+```
+You will see that the error message is written into `bash: not_existing_app: command not found...` is logged into the file. To append errors we can use `2>>`. Main difference is if we use simple `>` redirect the error wouldn't be logged in the file, it would be printed to the console.
+
+### Piping
+
+Piping is a very powerfull Unix concept. With the pipe operator we are able to send data between multiple processes on the fly without writing it on disk.
+Eg.:
+```
+ls -lah | grep "^d" | wc -l
+```
+This will give you how many directory tou have in the current dir `ls -lah` lists every file/directory in current dir. It's output is piped into `grep "^d"`'s input. `grep "^d"` filters for every line which starts with a `"d"` and pipe it's output to `wc -l`'s input. `wc -l` counts how many lines there are in `grep "^d"`'s outut. You can also redirect the result ot a file as we did it before:
+```
+ls -lah | grep "^d" | wc -l > num_dirs.txt
+```
+You can do more with pipes and redirects. To learn more visit:
+https://ryanstutorials.net/linuxtutorial/piping.php
+
+
+## htop
+
+htop is an interactive process viewer. It will list the CPU, RAM usage and processes similar to task manager. You can also send signals to processes. (such as SIGTERM to kill a process)
 ```
 htop
 ```
