@@ -1,22 +1,70 @@
 # Terminal commands 
 
 ## Useful commands on Linux
+
+### less
+Open text files in a scrollable way:
+```
+less test.txt
+```
+You can navigate the file using the arrow keys.\
+Quit the file by hitting q.\
+Note: less does not have to read the entire input file in one go, so it is very handy to open large files.
+
+***
+
+### man
 Open system manual pager for installed programs
 ```
-man cd
+man less
 ```
-Change directory with
-cd absolute or relative path 
+Man is helpful to explore a CLI program's expected options, arguments and other capabilities.
+
+***
+
+### pwd
+Print working directiory (same as the current directory)
 ```
-cd /absolutepath/documents/
+pwd
 ```
+
+#### Path basics
+There are some special paths in linux:
+* `.` relative path to the current directory
+* `..` relative path to a directory a level above the current directory
+* `/` absolute path to the root directory
+* `~` (tilde) this is an absolute path to the logged in user's home directory, It is defined in the envoronmental variable `$HOME`
+
+Examples for relative path: `./Document` or `../../dev/null` \
+Examples for absloute paths: `/home/username/Document` or `~/Document`
+
+***
+
+### cd
+Change the current directory to the path provided:
+```
+cd ~/Documents/
+```
+If a path is not provided cd takes you to your home directory (~):
+```
+cd
+```
+A dash as an argument will take you to the previous directory visited:
+```
+cd -
+```
+***
+
+
 
 Run shell script
 bash script.sh or 
 ```
 ./script.sh
 ```
-list files
+### ls
+
+ls lists the files at the provided paths:
 ```
 ls
 ```
