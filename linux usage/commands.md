@@ -149,23 +149,58 @@ rm -r ./nonempty-dir
 
 ***
 
+### Running scripts
 
-
-Run shell script
-bash script.sh or 
 ```
 ./script.sh
+# or
+./script.py
+```
+These will only work if the interpreter is specified with a shebang (#!) in the beginning of the source file.\
+E.g:
+```
+#!/usr/bin/bash
+
+# or
+
+#!/usr/bin/python
+```
+To find out where your interpretter lives, you can use the `which` command eg.: `which python` or `which bash` 
+
+If it is not specified in the script, the user should call the interpretter explicitly:
+```
+bash ./script.sh
+
+# or
+
+python ./script.py
 ```
 
+***
 
-chmod command can change permissions to file
-For example this makes script.sh executable
+### chmod
+By default linux don't give execute permission for new files.
+```
+touch script.sh
+./script.sh
+
+# OUTPUT:
+bash: permission denied: ./script.sh
+```
+
+chmod command can change permissions to file. \
+For example this makes script.sh executable:
 ```
 chmod +x script.sh
 ```
 
-Use ls command to check permissions 
-ls -l
+Permissions is an important subject. However, it is not in the scope of this document. To learn more about the basics of unix/linux permissions, you can visit: \
+https://www.redhat.com/sysadmin/linux-file-permissions-explained
+
+Remember, use `ls -l` command to check permissions 
+
+***
+
 This will list the nvidia video cards, usage and status. 
 Devices Ids underlined with red.
 ```
