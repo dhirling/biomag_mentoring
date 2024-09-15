@@ -38,6 +38,20 @@ There are some special paths in linux:
 Examples for relative path: `./Document` or `../../dev/null` \
 Examples for absloute paths: `/home/username/Document` or `~/Document`
 
+You can also use the `*` and `?` wildcards in paths (there are other globbing patterns too):
+* `?` represent one joker character
+* `*` represents any number of characters
+
+**Examples:**\
+Let we have a directory with the following files in it:
+```
+asd.txt    asd.csv    brekeke.txt
+```
+* `./asd.*` will match `asd.txt` and `asd.csv`
+* `./asd.?` won't match anything
+* `./asd.???` will match `asd.txt` and `asd.csv`
+* `*.txt` will match `asd.txt` and `brekeke.txt`
+
 ***
 
 ### cd
@@ -53,15 +67,9 @@ A dash as an argument will take you to the previous directory visited:
 ```
 cd -
 ```
+
 ***
 
-
-
-Run shell script
-bash script.sh or 
-```
-./script.sh
-```
 ### ls
 
 ls lists the files at the provided paths:
@@ -90,20 +98,63 @@ Example for using switches:
 ```
 ls -lah
 ```
+***
 
+### cp, mv, ln, rm
 
-copy file
+#### cp
+Copy files to a specified destination:
 ```
 cp source/path/file1.txt target/path/file1.txt
 ```
-move file
+Use `-r` `--recursive` switch for multiple files and directories:
+```
+cp -r source/path/* target/path/
+```
 
+#### mv
+Moves a file or directory to the target path:
 ```
 mv source/path/file1.txt target/path/file1.txt
 ```
-Delete file
+#### ln
+Create a hard link to a file:
 ```
-rm -rf file
+ln source/path/file1.txt target/path/file1.txt
+```
+A hard link can only be created on the same filesystem. If the original file is moved, the hard link will be still valid. \
+Create symbolic(soft) link to a file:
+```
+ln -s source/path/file1.txt target/path/file1.txt
+```
+Soft links can span between filesystems. however they will break if the original file is renamed, moved or deleted. \
+Links are very useful for example to make "shortcuts" for binaries or scripts to a folder which are in the `$PATH` environmental variable. That way the will be callable from anywhere. Don't overdo it.
+#### rm
+Remove a file or files form the filesystem:
+```
+rm file
+```
+You can remove empty directories with `rmdir`:
+```
+rm directory
+```
+Handy switches:
+* `-r` removes files and directories recursively. You can remove non empty folders with this command
+* `-f` force remove: won't prompt for warning (Only use this if you must)
+* `-d` remove **empty** directories
+Example:
+```
+rm -r ./nonempty-dir
+```
+
+***
+
+
+
+Run shell script
+bash script.sh or 
+```
+./script.sh
 ```
 
 
