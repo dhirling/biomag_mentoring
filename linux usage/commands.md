@@ -240,7 +240,7 @@ example run  on local pc:
 ssh -fNL 8000:localhost:8001 <username>@minerva
 ```
 
-## Scp
+### scp
 Copy files to/from remote server:
 you can use `-r` here as well as with `cp`
 ```
@@ -248,7 +248,7 @@ scp file.txt <username>@minerva://storage01/<username>/
 ```
 
 
-##  BIOMAG GPU servers:
+###  BIOMAG GPU servers:
 
 - minerva
 - diana
@@ -306,7 +306,16 @@ We can also redirect the STDERR stream. This is very useful for logging purposes
 ```
 not_existing_app 2> errors.txt
 ```
-You will see that the error message is written into `bash: not_existing_app: command not found...` is logged into the file. To append errors we can use `2>>`. Main difference is if we use simple `>` redirect the error wouldn't be logged in the file, it would be printed to the console.
+You will see that the error message is written into `bash: not_existing_app: command not found...` is logged into the file. To append errors we can use `2>>`. Main difference is if we use simple `>` redirect the error wouldn't be logged in the file, it would be printed to the console. \
+Redirecting errors also very useful if we are not interested in the errors at all. Eg. We can run any program in the background with `&` like this: `firefox &`. \
+Most of the time we are not really insterested in the warnings/errors out browser throws at us on STDERR. In these cases we can redirect the STDERR to `/dev/null`. Anything that goes to `/dev/null` is discarded:
+```
+firefox 2> /dev/null &
+
+# or we can discard both STDIN and STDERR:
+
+firefox > /dev/null 2>&1 &
+```
 
 ### Piping
 
@@ -323,50 +332,102 @@ You can do more with pipes and redirects. To learn more visit:
 https://ryanstutorials.net/linuxtutorial/piping.php
 
 
-## htop
+## Process handling basics
 
+### ps
+Lists all proccesses running in the current shell:
+```
+ps
+```
+This will most likely only list the current shell interpreter and ps. Let's add a new process to the current shell in the background:
+```
+sleep 100000 &
+ps
+```
+
+### kill
+To kill sleep we need to check it's process ID in ps:
+```
+ps
+
+# MY OUTPUT:
+#    PID TTY          TIME CMD
+#   3727 pts/0    00:00:01 zsh
+# 172339 pts/0    00:00:00 sleep     <--- This is what we want to terminate
+# 172361 pts/0    00:00:00 ps
+
+kill 172339
+```
+If a foreground process get stuck or you would  like to cancel it use `CTRL +  C`
+
+### htop
 htop is an interactive process viewer. It will list the CPU, RAM usage and processes similar to task manager. You can also send signals to processes. (such as SIGTERM to kill a process)
+
+htop is not always installed to linux distros by default. You can install it with your package manager:
+Debian/Ubuntu based distros:
+```
+sudo apt install htop
+```
+Fedora and other distros which use dnf:
+```
+sudo dnf install htop
+```
+Arch based distros:
+```
+sudo pacman -S htop
+```
+Usage:
 ```
 htop
 ```
-
-you can kill  processes using this command
-
-
-kill <check_for  pid in htop example>
-```
-kill 30850
-```
-
-if you have a stuck  process  or  you would  like  to cancel it  use
-
-CTRL +  C
-
+You can monitor all running proceses in this program, order your programs on CPU/mem usage, search in the list, you can even trminate them from here.
 
 
 ## Virtualenv
 
 Virtualenv is a tool to create isolated Python environments. This will  help you to keep your projects organized.
 
+From python 3.3+ venv module is part of python and can be used as:
+```
+python -m venv envname
+# OR
+python3 -m venv envname
+# this depends on the linux distribution
+```
+For older python versions you need to install virtualenv.
+To install virtualenv:
+Ubuntu:
+```
+sudo apt install python3-venv
+```
+Fedora:
+```
+sudo dnf install python3-virtualenv
+```
+Arch:
+```
+sudo pacman -S python-virtualenv
+```
+
 ### Create virtualenv 
+```
 virtualenv path/to/env 
+```
 
 select python  verison:
-to select python verison add the path of installed python like
-
-/bin/python
+to select python verison add the path of installed python like `/bin/python`
 
 
 ### Activate virtualenv
 
-Linux 
+#### Linux 
 ```
 source path/to/env/bin/activate
 ```
   
-Windows 
-Use windows Powershell  or gitbash
-if not  enabled to run scripts  run in powershell
+#### Windows
+Use Powershell or gitbash
+if you are not enabled to run scripts, then run in powershell
 ```
 set-executionpolicy remotesigned
 ```
@@ -396,34 +457,29 @@ pip install -r requirements.txt
 
 Tmux is a terminal multiplexer. It lets you switch easily between several programs in one terminal, detach them (they keep running in the background) and reattach them to a different terminal.
 
-start a new session
+Start a new session
 ```
 tmux
 ```
-exit from that session
+Exit from that session
 ```
 tmux detach
 ```
-attach  the first session
+Attach  the first session
 
 ```
 tmux a -t0
 ```
 
-Commands
+#### Commands
 
-vertical split<br>
-ctrl b + %
-horizonatal split  <br> 
-ctrl b + "
+vertical split - `ctrl b + %`
 
-switch between  panes
+horizontal split - `ctrl b + "`
 
-ctrl b + arrow <br> 
-
+Switch between  panes - `ctrl b + arrow`
 
 Link to more :
-
 https://tmuxcheatsheet.com/
 
 
@@ -440,14 +496,9 @@ Run jupyter server with the following command, set the port with --port
 jupyter-notebook --no-browser --port=8001
 ```
 
-
-
 On local pc, create ssh tunnel that allows port forwarding
 
-ssh -f -N -L 8000:localhost:8001 user@server
-
-
-
+ssh -fNL 8000:localhost:8001 user@server
 
 
 ## GIT
@@ -456,7 +507,7 @@ Install git, on Ubuntu it is install by default. On windows it is suggest to ins
 
 Download a repository
 ```
-git clone repositry
+git clone <url-to-repositry>
 ```
 This will list the changes that are not commited
 ```
@@ -476,8 +527,9 @@ git push origin <branch>
 git checkout <branch>
 ```
 
-add ".gitignore" file list the files that should not be uploaded: for example images, buld files  or virtualenv.
-This example will ignore build,  dist __pychache__ folders,  files with  png,  and  spec  extenstion, and will  allow png files from  images  folder
+add files/folders/globs to the `.gitignore` file. These files won't be tracked by git and won't be uploaded to the remot repository either. Add for example images, build files or the venv.
+
+This example will ignore build, dist __pychache__ folders, files with png and spec extenstion. Also it will track png files from images folder.
 
 ```
 build
@@ -488,18 +540,13 @@ __pycache__
 *.spec
 ```
 
+# Windows softwares
 
-
-
- # Windows softwares
- <br>
-git bash https://www.git-scm.com/downloads
-VSCODE https://code.visualstudio.com/ <br>
-Bitwise
-https://www.bitvise.com/ssh-client-download <br>
+git bash https://www.git-scm.com/downloads \
+VSCODE https://code.visualstudio.com/ \
+Bitwise https://www.bitvise.com/ssh-client-download
 
 # Homework
-
 
 - Push your python code into a repository that uses GPU, generates output (for example images, tables, texts,...)
 - Connect to a server remotely. 
