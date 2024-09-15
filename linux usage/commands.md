@@ -66,15 +66,30 @@ bash script.sh or
 
 ls lists the files at the provided paths:
 ```
-ls
+ls ./Documents
 ```
 
-Use switches to  get more  details
-"a" will add dates, "l"  will write the  permissions
+Most handy switches to use with ls:
+* `-a`  lists all files (even hidden files which name starts with a dot)
+* `-l` uses long format with the following fields
 ```
-ls -al
+-rwxrw-r--    10    root   root 2048    Jan 13 07:11 afile.exe
+?UUUGGGOOOS   00  UUUUUU GGGGGG ####    MON DD XX:XX FILENAME
+^ ^  ^  ^ ^    ^      ^      ^    ^      ^            ^- Filename.
+| |  |  | |    |      |      |    |      \-------------- Time of last modification.
+| |  |  | |    |      |      |    \--------------------- File Size OR for directory size of the metadata.
+| |  |  | |    |      |      \-------------------------- Group Name (for example, Users, Administrators, etc)
+| |  |  | |    |      \--------------------------------- Owner Account
+| |  |  | |    \---------------------------------------- Link count (what constitutes a "link" here varies)
+| |  |  | \--------------------------------------------- Alternative Access (blank means none defined, anything else varies)
+| \--\--\----------------------------------------------- Read, Write and Special access modes for [U]ser, [G]roup, and [O]thers (everyone else)
+\------------------------------------------------------- File type flag
 ```
-
+* `-h` makes the sizes human readable: eg. instead of `2888249` in bytes it is printed as `2.8M`
+Example for using switches:
+```
+ls -lah
+```
 
 
 copy file
