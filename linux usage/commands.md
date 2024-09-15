@@ -199,6 +199,46 @@ https://www.redhat.com/sysadmin/linux-file-permissions-explained
 
 Remember, use `ls -l` command to check permissions 
 
+
+## SSH 
+Connect to remote server on ssh:
+```
+ssh <user>@<server>
+# ssh will prompt you for your password
+```
+
+### ssh tunneling
+
+ssh tunnel allows to forward port from a remote machine securely.
+
+ssh -fNL <LOCALPORT>:<serveradress>:<PORT> <user>@<server>
+* `-f` allows to run it in the background
+* `-N` tells not to try reading a command from standard input
+* `-L` opens a local port
+
+In this case remote host `8001` port will be forwared to local `8000` port
+
+
+example run  on local pc:
+
+```
+ssh -fNL 8000:localhost:8001 <username>@minerva
+```
+
+## Scp
+Copy files to/from remote server:
+you can use `-r` here as well as with `cp`
+```
+scp file.txt <username>@minerva://storage01/<username>/
+```
+
+
+##  BIOMAG GPU servers:
+
+- minerva
+- diana
+- persephone
+
 ***
 
 This will list the nvidia video cards, usage and status. 
@@ -235,43 +275,6 @@ kill 30850
 if you have a stuck  process  or  you would  like  to cancel it  use
 
 CTRL +  C
-
-
-## SSH 
-connect to remote server on ssh:
-
-ssh user@server
-password
-
-### ssh tunneling
-
-Ssh tunnel allows to forward port from a remote machine securely.
-
-ssh -f -n -L LOCALPORT:serveradress:PORT user@server
-
-In this case remote host 8001 port will be forwared to local 8000 port
-
-
-example run  on local pc:
--f and -N commands allow to run it in background
-```
-ssh -f -N -L 8000:localhost:8001 user@server
-
-```
-
-## Scp
-Copy files to remote server:
-
-```
-scp file.txt ```username```@minerva://storage01/```username```/
-```
-
-
-##  BIOMAG GPU servers:
-
-- minerva
-- diana
-- persephone
 
 
 
