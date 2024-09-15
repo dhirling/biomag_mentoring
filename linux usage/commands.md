@@ -241,23 +241,37 @@ scp file.txt <username>@minerva://storage01/<username>/
 
 ***
 
-This will list the nvidia video cards, usage and status. 
-Devices Ids underlined with red.
+## nvidia-smi
+
+On the server this will list the nvidia video cards. It will also display their status and usage. \
+You can only use this locally if you have nvidia video card with proprietary drivers installed.
+
 ```
 nvidia-smi  
 ```
-
+Device IDs are underlined with red: \
 <img src='images/nvidiasmi.png'><br>
 
-To restrict videocard usage to  number you can specify it  your python code
-or
+You can have a simplified list of the devices via `nvidia-smi -L`, This will list the device ids, device names, along with their UUID.
 
-run your script with "CUDA_VISIBLE_DEVICES=deviceid(s)"
+To restrict videocard usage you can specify the device IDs in your python script or set the CUDA_VISIBLE_DEVICES environmental variable:
+* If you want to select the devices only for one run
+execute your script with `CUDA_VISIBLE_DEVICES=deviceid(s)` as a script parameter.
+* If you are going to use the same device throughout your session, you can just export it as:
+`export CUDA_VISIBLE_DEVICES=deviceid(s)`
 
 This example will run the script on the  0 and 1 ID GPUs
 ```
 CUDA_VISIBLE_DEVICES=0,1 python3 train_deep_learning_important_unique_word_champion_segmentation.py
 ```
+This will do the same for multiple training:
+```
+export CUDA_VISIBLE_DEVICES=0,1
+python3 train_deep_learning_important_unique_word_champion_segmentation.py
+python3 train_deep_learning_important_something_else.py
+```
+
+***
 
 This will list the CPU, RAM usage and processes  similar to task manager
 ```
